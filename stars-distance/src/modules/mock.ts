@@ -24,6 +24,6 @@ export const STARS_MOCK: Star[] = [
     declension: "+07° 24′ 25″",
     magnitude: "0.42",
     alt_names: "α Ori",
-    image_url: "./images/stars_illustration.jpg",
+    image_url: "",
   },
 ];

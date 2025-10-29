@@ -25,8 +25,7 @@ export const HomePage: FC = () => {
             >
               <h1 className="display-4 fw-bold mb-3">Stars Distance</h1>
               <p className="lead mb-4 text-secondary">
-                Изучайте расстояния между звёздами и открывайте тайны
-                космоса.  
+                Изучайте расстояния между звёздами и открывайте тайны космоса.  
                 Наш проект помогает исследовать Вселенную с точностью
                 астрономических наблюдений.
               </p>
@@ -42,19 +41,32 @@ export const HomePage: FC = () => {
             </motion.div>
           </Col>
 
-          <Col
-            md={6}
-            className="text-center mt-5 mt-md-0"
-          >
-            <motion.img
-              src="./images/stars_illustration.jpg"
-              alt="Stars illustration"
-              className="img-fluid"
+          <Col md={6} className="text-center mt-5 mt-md-0">
+            <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1 }}
-              style={{ maxWidth: "400px" }}
-            />
+              style={{
+                position: "relative",
+                display: "inline-block",
+                overflow: "hidden",
+                borderRadius: "20px",
+              }}
+            >
+              <img
+                src="./images/stars_illustration.jpg"
+                alt="Stars illustration"
+                className="img-fluid"
+                style={{
+                  maxWidth: "420px",
+                  maskImage:
+                    "radial-gradient(circle, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 90%)",
+                  WebkitMaskImage:
+                    "radial-gradient(circle, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 90%)",
+                  transition: "filter 0.3s ease",
+                }}
+              />
+            </motion.div>
           </Col>
         </Row>
       </Container>

@@ -20,7 +20,7 @@ const InputField: FC<Props> = ({
   buttonTitle = "Искать",
 }) => {
   const handleClick = () => {
-    onSubmit(value); // ✅ передаём строку
+    onSubmit(value);
   };
 
   const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -37,7 +37,7 @@ const InputField: FC<Props> = ({
         value={value}
         placeholder={placeholder}
         onChange={(event) => setValue(event.target.value)}
-        onKeyDown={handleEnter} // ✅ добавляем возможность Enter
+        onKeyDown={handleEnter}
         disabled={loading}
       />
       <Button onClick={handleClick} disabled={loading} className="search-button text-white">

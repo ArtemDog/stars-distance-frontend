@@ -17,7 +17,7 @@ export const StarPage: FC = () => {
 
     getStarById(Number(id))
         .then((response) => {
-            setStarData(response.star || null); // ✅ берем объект внутри поля star
+            setStarData(response.star || null);
             setLoading(false);
         })
       .catch(() => {

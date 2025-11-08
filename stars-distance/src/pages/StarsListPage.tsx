@@ -1,5 +1,5 @@
 import defaultImage from "../assets/default-star-img.png";
-import { type FC, useState, useEffect } from "react";
+import { type FC, useEffect, useState } from "react";
 import { Spinner, Container, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
@@ -7,15 +7,20 @@ import { StarCard } from "../components/StarCard";
 import InputField from "../components/InputField";
 import { BreadCrumbs } from "../components/BreadCrumbs";
 import { ROUTES, ROUTE_LABELS } from "../../Routes";
-import { getStarsByName, getCartInfo } from "../modules/starsApi";
+import { getStarsByName, getCartInfo, type Star } from "../modules/starsApi";
 import { STARS_MOCK } from "../modules/mock";
-import { type Star } from "../modules/starsApi";
+
+import { useSelector, useDispatch } from "react-redux";
+import type { RootState, AppDispatch } from "../store/store";
+import { setSearchValue } from "../features/filterSlice";
 
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./CartButton.css";
 
 const StarListPage: FC = () => {
-  const [searchValue, setSearchValue] = useState("");
+  const dispatch: AppDispatch = useDispatch();
+  const searchValue = useSelector((state: RootState) => state.filter.searchValue);
+
   const [loading, setLoading] = useState(false);
   const [stars, setStars] = useState<Star[]>([]);
   const [cartCount, setCartCount] = useState(0);
@@ -30,24 +35,22 @@ const StarListPage: FC = () => {
       .then((response) => {
         const data = (response.stars || []).map((star: Star) => ({
           ...star,
-          image_url: star.image_url ? star.image_url : defaultImage,
+          image_url: star.image_url || defaultImage,
         }));
         setStars(data);
       })
-      .catch((error) => {
-        console.warn("⚠️ Backend unavailable, using mock data:", error);
+      .catch(() => {
         const data = STARS_MOCK.filter((star) =>
           star.name.toLowerCase().startsWith(name.toLowerCase())
         ).map((star) => ({
           ...star,
-          image_url: star.image_url ? star.image_url : defaultImage,
+          image_url: star.image_url || defaultImage,
         }));
         setStars(data);
       })
       .finally(() => setLoading(false));
   };
 
-  // ✅ Загружаем информацию о корзине при монтировании
   useEffect(() => {
     handleSearch("");
 
@@ -73,20 +76,13 @@ const StarListPage: FC = () => {
   };
 
   return (
-    <div
-      style={{
-        backgroundColor: "#000",
-        minHeight: "100vh",
-        color: "#fff",
-      }}
-    >
+    <div style={{ backgroundColor: "#000", minHeight: "100vh", color: "#fff" }}>
       <Container fluid="lg" style={{ paddingTop: "2rem", paddingBottom: "2rem" }}>
         <Row className="align-items-start mb-2" style={{ minHeight: "60px" }}>
           <Col xs={12} md={6} className="d-flex flex-column justify-content-start">
             <BreadCrumbs crumbs={[{ label: ROUTE_LABELS.STARS }]} />
           </Col>
 
-          {/* 🔽 Блок с поиском и корзиной */}
           <Col
             xs={12}
             md={6}
@@ -95,13 +91,12 @@ const StarListPage: FC = () => {
           >
             <InputField
               value={searchValue}
-              setValue={setSearchValue}
+              setValue={(val) => dispatch(setSearchValue(val))}
               loading={loading}
               onSubmit={handleSearch}
               placeholder="Поиск звезды по имени..."
             />
 
-            {/* Кнопка корзины */}
             <button
               onClick={handleCartClick}
               className={`cart-panel ${cartCount > 0 ? "cart-full" : "cart-empty"}`}
@@ -118,8 +113,8 @@ const StarListPage: FC = () => {
           </div>
         )}
 
-        {!loading &&
-          (!stars.length ? (
+        {!loading && (
+          !stars.length ? (
             <div className="text-center mt-5">
               <h3>К сожалению, пока ничего не найдено :(</h3>
             </div>
@@ -149,7 +144,8 @@ const StarListPage: FC = () => {
                 </div>
               ))}
             </div>
-          ))}
+          )
+        )}
       </Container>
     </div>
   );

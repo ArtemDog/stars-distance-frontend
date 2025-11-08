@@ -8,7 +8,7 @@ import { StarPage } from "./pages/StarPage";
 
 const App: FC = () => {
     return (
-      <BrowserRouter>
+      <BrowserRouter basename="/stars-distance-frontend">
         <Navigation />
         <Routes>
           <Route path={ROUTES.HOME} element={<HomePage />} />

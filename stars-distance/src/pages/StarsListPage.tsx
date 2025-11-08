@@ -7,14 +7,19 @@ import { StarCard } from "../components/StarCard";
 import InputField from "../components/InputField";
 import { BreadCrumbs } from "../components/BreadCrumbs";
 import { ROUTES, ROUTE_LABELS } from "../../Routes";
-import { getStarsByName } from "../modules/starsApi";
+import { getStarsByName, getCartInfo } from "../modules/starsApi";
 import { STARS_MOCK } from "../modules/mock";
 import { type Star } from "../modules/starsApi";
+
+import "bootstrap-icons/font/bootstrap-icons.css";
+import "./CartButton.css";
 
 const StarListPage: FC = () => {
   const [searchValue, setSearchValue] = useState("");
   const [loading, setLoading] = useState(false);
   const [stars, setStars] = useState<Star[]>([]);
+  const [cartCount, setCartCount] = useState(0);
+  const [requestID, setRequestID] = useState(-1);
 
   const navigate = useNavigate();
 
@@ -42,12 +47,29 @@ const StarListPage: FC = () => {
       .finally(() => setLoading(false));
   };
 
+  // ✅ Загружаем информацию о корзине при монтировании
   useEffect(() => {
     handleSearch("");
+
+    getCartInfo()
+      .then((data) => {
+        setCartCount(data.count);
+        setRequestID(data.request_id);
+      })
+      .catch(() => {
+        setCartCount(0);
+        setRequestID(-1);
+      });
   }, []);
 
   const handleCardClick = (id: number) => {
     navigate(`${ROUTES.STARS}/${id}`);
+  };
+
+  const handleCartClick = () => {
+    if (requestID > 0) {
+      navigate(`/request-of-the-distance-to-the-star/${requestID}`);
+    }
   };
 
   return (
@@ -63,10 +85,13 @@ const StarListPage: FC = () => {
           <Col xs={12} md={6} className="d-flex flex-column justify-content-start">
             <BreadCrumbs crumbs={[{ label: ROUTE_LABELS.STARS }]} />
           </Col>
+
+          {/* 🔽 Блок с поиском и корзиной */}
           <Col
             xs={12}
             md={6}
             className="d-flex justify-content-md-end align-items-start mt-3 mt-md-0"
+            style={{ gap: "10px" }}
           >
             <InputField
               value={searchValue}
@@ -75,6 +100,15 @@ const StarListPage: FC = () => {
               onSubmit={handleSearch}
               placeholder="Поиск звезды по имени..."
             />
+
+            {/* Кнопка корзины */}
+            <button
+              onClick={handleCartClick}
+              className={`cart-panel ${cartCount > 0 ? "cart-full" : "cart-empty"}`}
+            >
+              <i className="bi bi-bag" style={{ fontSize: "1.6rem", transform: "translateY(-2px)" }}></i>
+              <span className="cart-count">{cartCount}</span>
+            </button>
           </Col>
         </Row>
 

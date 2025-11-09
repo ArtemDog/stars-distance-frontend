@@ -7,18 +7,44 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
+# Dependency directories
+node_modules/
+
+# Build output
+dist/
+dist-ssr/
+dev-dist/
+
+# Local environment files
+.env
+.env.local
+.env.*.local
+
+# Certificates and keys
+*.pem
+*.key
+*.crt
+*.cert
+*.p12
+*.pfx
+*.jks
+firebase-key.json
+serviceAccount.json
 
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
-.idea
+.idea/
 .DS_Store
+Thumbs.db
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Miscellaneous
+*.local
+*.sw?
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
-*.sw?

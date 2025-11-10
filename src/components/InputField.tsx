@@ -5,7 +5,7 @@ import "./InputField.css";
 interface Props {
   value: string;
   setValue: (value: string) => void;
-  onSubmit: (value: string) => void; // ✅ добавить аргумент
+  onSubmit: (value: string) => void;
   loading?: boolean;
   placeholder?: string;
   buttonTitle?: string;

@@ -16,6 +16,7 @@ import { setSearchValue } from "../features/filterSlice";
 
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./CartButton.css";
+import "./StarListPage.css"; // новый CSS-файл для сетки
 
 const StarListPage: FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -119,16 +120,7 @@ const StarListPage: FC = () => {
               <h3>К сожалению, пока ничего не найдено :(</h3>
             </div>
           ) : (
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
-                gap: "1.5rem",
-                justifyContent: "start",
-                margin: 0,
-                padding: 0,
-              }}
-            >
+            <div className="star-grid">
               {stars.map((star) => (
                 <div
                   key={star.id}

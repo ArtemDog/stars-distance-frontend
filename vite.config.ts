@@ -7,7 +7,7 @@ import path from 'path';
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: "/stars-distance-frontend/",
+  base: "/stars-distance-frontend",
   server: {
     port: 3000,
     proxy: {

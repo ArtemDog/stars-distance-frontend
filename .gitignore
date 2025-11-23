@@ -9,18 +9,27 @@ lerna-debug.log*
 
 # Dependency directories
 node_modules/
+jspm_packages/
+
+# TypeScript
+*.tsbuildinfo
+
+# Optional eslint cache
+.eslintcache
 
 # Build output
 dist/
 dist-ssr/
 dev-dist/
+build/
 
 # Local environment files
 .env
 .env.local
 .env.*.local
+*.env
 
-# Certificates and keys
+# Certificates and keys (CRITICAL)
 *.pem
 *.key
 *.crt
@@ -34,17 +43,13 @@ serviceAccount.json
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
 .idea/
 .DS_Store
 Thumbs.db
-
-# TypeScript cache
-*.tsbuildinfo
-
-# Miscellaneous
-*.local
 *.sw?
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
+
+# Tauri
+src-tauri/target/
+src-tauri/gen/

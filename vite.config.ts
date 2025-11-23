@@ -4,16 +4,18 @@ import { VitePWA } from 'vite-plugin-pwa'
 import mkcert from 'vite-plugin-mkcert'
 import fs from 'fs';
 import path from 'path';
+import { dest_root, api_proxy_addr } from './src/target_config'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: "/stars-distance-frontend",
+  base: dest_root,
   server: {
     port: 3000,
     proxy: {
       "/api": {
-        target: "http://localhost:8080",
+        target: api_proxy_addr,
         changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
       },
     },
     https:{

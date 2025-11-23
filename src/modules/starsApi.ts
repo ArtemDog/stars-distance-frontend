@@ -1,3 +1,5 @@
+import { dest_api } from "../target_config"
+
 export interface Star {
   id: number;
   name: string;
@@ -27,19 +29,19 @@ export interface CartResponse {
 
 // Получение всех звезд или по имени
 export const getStarsByName = async (name = ""): Promise<StarsResponse> => {
-  return fetch(`/api/stars?star-by-name=${name}`)
+  return fetch(dest_api + `/stars?star-by-name=${name}`)
     .then((response) => response.json());
 };
 
 // Почение конкретной звезды по ID
 export const getStarById = async (id: number): Promise<StarResponse> => {
-  return fetch(`/api/stars/${id}`)
+  return fetch(dest_api + `/stars/${id}`)
     .then((response) => response.json());
 };
 
 // Получение информации о корзине
 export const getCartInfo = async (): Promise<CartResponse> => {
-  const response = await fetch(`/api/request-star-distance/cart`);
+  const response = await fetch(dest_api + `/request-star-distance/cart`);
   if (!response.ok) {
     throw new Error("Failed to fetch cart info");
   }

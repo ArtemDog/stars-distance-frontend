@@ -7,6 +7,7 @@ import { getStarById, type Star } from "../modules/starsApi";
 import { STARS_MOCK } from "../modules/mock";
 import defaultImage from "../assets/default-star-img.png";
 import "./StarPage.css";
+import { dest_img } from "../target_config";
 
 export const StarPage: FC = () => {
   const { id } = useParams();
@@ -17,10 +18,10 @@ export const StarPage: FC = () => {
     if (!id) return;
 
     getStarById(Number(id))
-        .then((response) => {
-            setStarData(response.star || null);
-            setLoading(false);
-        })
+      .then((response) => {
+        setStarData(response.star || null);
+        setLoading(false);
+      })
       .catch(() => {
         const star = STARS_MOCK.find((s) => String(s.id) === id) || null;
         setStarData(star);
@@ -49,7 +50,7 @@ export const StarPage: FC = () => {
             <>
               {/* Изображение */}
               <Image
-                src={starData.image_url || defaultImage}
+                src={dest_img + starData.image_url || defaultImage}
                 alt={starData.name}
                 className="star-image"
               />

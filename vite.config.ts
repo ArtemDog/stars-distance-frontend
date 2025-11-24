@@ -4,7 +4,7 @@ import { VitePWA } from 'vite-plugin-pwa'
 import mkcert from 'vite-plugin-mkcert'
 import fs from 'fs';
 import path from 'path';
-import { dest_root, api_proxy_addr } from './src/target_config'
+import { dest_root, api_proxy_addr, img_proxy_addr } from './src/target_config'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -12,13 +12,18 @@ export default defineConfig({
   server: {
     port: 3000,
     proxy: {
-      "/api": {
+      "/api-proxy": {
         target: api_proxy_addr,
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ""),
+        rewrite: (path) => path.replace(/^\/api-proxy/, ""),
+      },
+      "/img-proxy": {
+        target: img_proxy_addr,
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/img-proxy/, ""),
       },
     },
-    https:{
+    https: {
       key: fs.readFileSync(path.resolve(__dirname, 'cert.key')),
       cert: fs.readFileSync(path.resolve(__dirname, 'cert.crt')),
     },

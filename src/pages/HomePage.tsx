@@ -4,6 +4,7 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 import { motion } from "framer-motion";
 import { ROUTES } from "../../Routes";
 import "./HomePage.css";
+import { dest_root } from "../target_config";
 
 export const HomePage: FC = () => {
   return (
@@ -18,7 +19,7 @@ export const HomePage: FC = () => {
             >
               <h1 className="display-4 fw-bold mb-3">Stars Distance</h1>
               <p className="lead mb-4 text-secondary">
-                Изучайте расстояния между звёздами и открывайте тайны космоса.  
+                Изучайте расстояния между звёздами и открывайте тайны космоса.
                 Наш проект помогает исследовать Вселенную с точностью
                 астрономических наблюдений.
               </p>
@@ -42,7 +43,7 @@ export const HomePage: FC = () => {
               className="homepage-image-wrapper"
             >
               <img
-                src="./images/stars_illustration.jpg"
+                src={`${dest_root}/images/stars_illustration.jpg`}
                 alt="Stars illustration"
                 className="homepage-image"
               />

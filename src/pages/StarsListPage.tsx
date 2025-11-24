@@ -9,6 +9,7 @@ import { BreadCrumbs } from "../components/BreadCrumbs";
 import { ROUTES, ROUTE_LABELS } from "../../Routes";
 import { getStarsByName, getCartInfo, type Star } from "../modules/starsApi";
 import { STARS_MOCK } from "../modules/mock";
+import { dest_img } from "../target_config";
 
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState, AppDispatch } from "../store/store";
@@ -36,7 +37,7 @@ const StarListPage: FC = () => {
       .then((response) => {
         const data = (response.stars || []).map((star: Star) => ({
           ...star,
-          image_url: star.image_url || defaultImage,
+          image_url: star.image_url ? dest_img + star.image_url : defaultImage,
         }));
         setStars(data);
       })

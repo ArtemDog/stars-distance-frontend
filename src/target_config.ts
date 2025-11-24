@@ -1,4 +1,4 @@
-const target_tauri = false
+const target_tauri = (typeof process !== 'undefined' && process.env?.VITE_TARGET_TAURI === 'true') || ((import.meta as any).env?.VITE_TARGET_TAURI === 'true');
 
 export const api_proxy_addr = "http://192.168.1.21:8080"
 export const img_proxy_addr = "http://192.168.1.21:9000"

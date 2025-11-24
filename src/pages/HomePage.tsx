@@ -2,9 +2,11 @@ import { type FC } from "react";
 import { Link } from "react-router-dom";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { motion } from "framer-motion";
+
 import { ROUTES } from "../../Routes";
-import "./HomePage.css";
 import { dest_root } from "../target_config";
+
+import "./HomePage.css";
 
 export const HomePage: FC = () => {
   return (

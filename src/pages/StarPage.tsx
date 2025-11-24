@@ -1,13 +1,15 @@
 import { type FC, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Spinner, Container, Image } from "react-bootstrap";
+
 import { BreadCrumbs } from "../components/BreadCrumbs";
 import { ROUTES, ROUTE_LABELS } from "../../Routes";
 import { getStarById, type Star } from "../modules/starsApi";
 import { STARS_MOCK } from "../modules/mock";
-import defaultImage from "../assets/default-star-img.png";
-import "./StarPage.css";
 import { dest_img } from "../target_config";
+import defaultImage from "../assets/default-star-img.png";
+
+import "./StarPage.css";
 
 export const StarPage: FC = () => {
   const { id } = useParams();
@@ -17,16 +19,21 @@ export const StarPage: FC = () => {
   useEffect(() => {
     if (!id) return;
 
-    getStarById(Number(id))
-      .then((response) => {
+    const fetchStar = async () => {
+      setLoading(true);
+      try {
+        const response = await getStarById(Number(id));
         setStarData(response.star || null);
-        setLoading(false);
-      })
-      .catch(() => {
+      } catch (error) {
+        console.warn("Failed to fetch star details, using mock data", error);
         const star = STARS_MOCK.find((s) => String(s.id) === id) || null;
         setStarData(star);
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+
+    fetchStar();
   }, [id]);
 
   return (

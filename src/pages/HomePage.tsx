@@ -1,9 +1,7 @@
 import { type FC } from "react";
-import { Link } from "react-router-dom";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import { motion } from "framer-motion";
 
-import { ROUTES } from "../../Routes";
 import { dest_root } from "../target_config";
 
 import "./HomePage.css";
@@ -21,19 +19,11 @@ export const HomePage: FC = () => {
             >
               <h1 className="display-4 fw-bold mb-3">Stars Distance</h1>
               <p className="lead mb-4 text-secondary">
-                Изучайте расстояния между звёздами и открывайте тайны космоса.
-                Наш проект помогает исследовать Вселенную с точностью
-                астрономических наблюдений.
+                Сервис, который поможет вам вычисолить
+                расстояние от Земли до звезды в галактике Млечный путь
+                по годовому параллаксу звезды из каталога.
+
               </p>
-              <Link to={ROUTES.STARS}>
-                <Button
-                  variant="light"
-                  size="lg"
-                  className="rounded-3 px-4 py-2 fw-semibold"
-                >
-                  Перейти к звёздам
-                </Button>
-              </Link>
             </motion.div>
           </Col>
 

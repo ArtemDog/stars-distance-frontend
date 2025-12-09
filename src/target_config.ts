@@ -1,7 +1,43 @@
-const target_tauri = (typeof process !== 'undefined' && process.env?.VITE_TARGET_TAURI === 'true') || ((import.meta as any).env?.VITE_TARGET_TAURI === 'true');
+/// <reference lib="dom" />
 
-export const api_proxy_addr = "http://192.168.1.21:8080"
-export const img_proxy_addr = "http://192.168.1.21:9000"
-export const dest_api = (target_tauri) ? api_proxy_addr : "/api-proxy"
-export const dest_img = (target_tauri) ? img_proxy_addr : "/img-proxy"
-export const dest_root = (target_tauri) ? "" : "/stars-distance-frontend"
+// Определяем окружение
+const isTauriApp = typeof window !== 'undefined' && !!(window as any).__TAURI__;
+const isDevelopment = typeof window !== 'undefined' && (
+    window.location.hostname === 'localhost' ||
+    window.location.hostname === '127.0.0.1' ||
+    window.location.hostname.includes('192.168.')
+);
+const isGitHubPages = typeof window !== 'undefined' && window.location.hostname.includes('github.io');
+
+export const api_proxy_addr = "http://10.215.82.130:8080"
+export const img_proxy_addr = "http://10.215.82.130:9000"
+
+export const dest_api = isTauriApp
+    ? api_proxy_addr  // Для Tauri - прямой адрес
+    : isGitHubPages
+        ? api_proxy_addr  // Для GitHub Pages - прямой адрес к бэкенду
+        : isDevelopment
+            ? "/api-proxy"  // Для локальной разработки - через Vite proxy
+            : api_proxy_addr;  // Для продакшн на других доменах
+
+export const dest_img = isTauriApp
+    ? img_proxy_addr
+    : isGitHubPages
+        ? img_proxy_addr
+        : isDevelopment
+            ? "/img-proxy"
+            : img_proxy_addr;
+
+export const dest_root = isTauriApp ? "" : "/stars-distance-frontend"
+
+// Логирование для отладки
+if (typeof window !== 'undefined') {
+    console.log('Environment:', {
+        isTauriApp,
+        isDevelopment,
+        isGitHubPages,
+        hostname: window.location.hostname,
+        dest_api,
+        dest_img
+    });
+}
